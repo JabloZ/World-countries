@@ -50,19 +50,23 @@
         .grid-container {
         margin-top: 10%;
         display: grid;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto auto auto auto;
         margin-left: 5vw;
         margin-right: 5vw;
         
+        grid-template-columns: 20% 5% 20% 5% 20% 5% 20% 5%;
+        
+        
         }
-        .grid-item {
+        .grid-container .grid-item {
+            min-width: 20vw;
             min-height: 45vh;
             background-color: rgba(117, 77, 129, 0.8);
-            margin: 12px;
+            margin: 18px;
             font-size: 30px;
             text-align: left;
             text-decoration: none;
-            
+             
             color: white;
             display: flex;
             flex-direction: column;
@@ -159,7 +163,7 @@
         }
         .short-desc{
             padding: 12px;
-            font-size: 18px;
+            font-size: 16px;
             
         }
         .short-desc p{
@@ -172,6 +176,35 @@
             padding: 12px;
             color: white;
             border-radius: 6px;
+        }
+        .grid-container .grid-item img{
+            min-width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            min-height: 100%;
+        }
+        .flag-con{
+            max-width: 100%;
+        }
+        @media only screen and (max-width: 1000px){
+            .grid-container{
+            
+            grid-template-columns: 45% 5% 45% 5%;
+            }
+            .grid-container .grid-item{
+                min-width: 40%;
+            }
+
+        }
+        @media only screen and (max-width: 500px){
+            .grid-container{
+            
+            grid-template-columns: 90%;
+            }
+            .grid-container .grid-item{
+                min-width: 40%;
+            }
+
         }
 </style>
 <body>
@@ -205,29 +238,62 @@
     </div>
 </nav>   
     
-<div class="grid-container">
-    <div class="grid-item">
-        <div class="flag-con" style="min-height: 60%; background-color: white;"></div>
-        <div class="short-desc" style="min-height: 40%;"><p>Name: Poland</p><p>Population: 38.1M</p><p>Region: Europe</p><p>Language: Polish</p><p style="padding-top: 20px;"><a href="#">Read more >></a></p> </div>
-    </div>
-    <div class="grid-item">
-        <div class="flag-con" style="min-height: 60%; background-color: white;"></div>
-        <div class="short-desc" style="min-height: 40%;"><p>Name: Poland</p><p>Population: 38.1M</p><p>Region: Europe</p><p>Language: Polish</p><p style="padding-top: 20px;"><a href="#">Read more >></a></p> </div></div>
-    <div class="grid-item">
-        <div class="flag-con" style="min-height: 60%; background-color: white;"></div>
-        <div class="short-desc" style="min-height: 40%;"><p>Name: Poland</p><p>Population: 38.1M</p><p>Region: Europe</p><p>Language: Polish</p><p style="padding-top: 20px;"><a href="#">Read more >></a></p> </div></div>  
-    <div class="grid-item">
-        <div class="flag-con" style="min-height: 60%; background-color: white;"></div>
-        <div class="short-desc" style="min-height: 40%;"><p>Name: Poland</p><p>Population: 38.1M</p><p>Region: Europe</p><p>Language: Polish</p><p style="padding-top: 20px;"><a href="#">Read more >></a></p> </div></div>
-    <div class="grid-item">5</div>
-    <div class="grid-item">6</div>  
-    <div class="grid-item">7</div>
-    <div class="grid-item">8</div>
-    <div class="grid-item">9</div>  
-    <div class="grid-item">9</div>  
-  </div>
+<div class="grid-container" id="all-countries">
+</div>
   <script>
+    const api_url = 
+      "https://restcountries.com/v3.1/all";
+  
+// Defining async function
+async function getapi(url) {
+    
+        // Storing response
+        const response = await fetch(url);
 
+        var data = await response.json();
+        
+        for (var key in data) {
+            try {
+                var capital=data[key]['capital']  
+            }
+            catch(err) {
+                var capital="No capital"
+            }
+
+
+            try {
+                console.log('he')
+                var languages=""
+                ob=[key]['language']
+                for (var key2 in ob) {
+                    languages=languages+" "+ob[key2]
+                    console.log(languages,'lang')
+                }
+            }
+            catch(err) {
+                console.log('nagle ror')
+                var capital="No capital"
+            }
+
+            document.getElementById("all-countries").innerHTML += 
+            `<div class="grid-item">
+                <div class="flag-con" style="min-height: 50%; background-color: white;"><img src="${data[key]["flags"]["png"]}"></div>
+                <div class="short-desc" style="min-height: 50%;"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>${"Population: "+ data[key]["population"]}</p><p>${"Region: " + data[key]["region"]}</p><p>Language: Polish</p><p style="padding-top: 20px;"><a href="#">Read more </a></p> </div>
+            </div>";`
+
+            
+        }
+
+
+        //['name', 'tld', 'cca2', 'ccn3', 'cca3', 'cioc', 'independent', 'status', 'unMember', 'currencies', 'idd', 'capital', 'altSpellings', 'region', 'subregion', 'languages', 
+        //'translations', 'latlng', 'landlocked', 'borders', 'area', 'demonyms', 'flag', 'maps', 'population', 'fifa', 'car', 'timezones', 'continents', 'flags', 'coatOfArms', 'startOfWeek', 'capitalInfo', 'postalCode']    
+
+            
+        }
+
+        // Calling that async function
+        console.log('wor')
+        getapi(api_url);
   </script>
 </body>
 </html>

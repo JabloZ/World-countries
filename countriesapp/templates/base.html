@@ -33,7 +33,9 @@
             line-height: normal !important;
             background-color: #622a79;
             
+            
         }
+
         nav {
             text-align: center;
             min-width: 100%;
@@ -48,7 +50,7 @@
         }
 
         .grid-container {
-        margin-top: 10%;
+        
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto auto;
         margin-left: 5vw;
@@ -60,7 +62,7 @@
         }
         .grid-container .grid-item {
             min-width: 20vw;
-            min-height: 45vh;
+            min-height: 40vh;
             background-color: rgba(117, 77, 129, 0.8);
             margin: 18px;
             font-size: 30px;
@@ -196,7 +198,21 @@
             }
 
         }
-        @media only screen and (max-width: 500px){
+        .top-div{
+            min-height: 20vh;
+            display: flex;
+            text-align: center;
+            align-items: flex-end;
+            font-size: 24px;
+            color: white;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .top-div p{
+            margin: 18px;
+        }
+        
+        @media only screen and (max-width: 600px){
             .grid-container{
             
             grid-template-columns: 90%;
@@ -206,6 +222,7 @@
             }
 
         }
+
 </style>
 <body>
 <nav>
@@ -237,13 +254,18 @@
         </div>
     </div>
 </nav>   
+<div class="main-d">
+    <div class="top-div">
+    <p id="how-many"></p>
+    </div>
+    <div class="grid-container" id="all-countries">
+        
+    </div>
+</div> 
+    <script>
+        const api_url = 
+        "https://restcountries.com/v3.1/all";
     
-<div class="grid-container" id="all-countries">
-</div>
-  <script>
-    const api_url = 
-      "https://restcountries.com/v3.1/all";
-  
 // Defining async function
 async function getapi(url) {
     
@@ -251,7 +273,7 @@ async function getapi(url) {
         const response = await fetch(url);
 
         var data = await response.json();
-        
+        var edited_lan=""
         for (var key in data) {
             try {
                 var capital=data[key]['capital']  
@@ -262,23 +284,46 @@ async function getapi(url) {
 
 
             try {
-                console.log('he')
                 var languages=""
-                ob=[key]['language']
+                ob=data[key]['languages']
                 for (var key2 in ob) {
-                    languages=languages+" "+ob[key2]
-                    console.log(languages,'lang')
+                    languages=languages+" "+ob[key2]+","
                 }
+                var edited_lan = languages.slice(0, -1)
             }
             catch(err) {
-                console.log('nagle ror')
+                
                 var capital="No capital"
             }
+            
+            var a = data[key]["population"]
+            if (a>1000 && a<1000000){
+                var num = Number(a/1000)
+                var to_add = "K"
+            }
+            else if(a>=1000000 && a<1000000000){
+                var num = Number(a/1000000)
+                var to_add = "M"
+            }
+            else if(a>=1000000000){
+                var num = Number(a/1000000000)
+                var to_add = "B"
+            }
+            else{
+                var num = Number(a)
+                var to_add = " "
+            }
+            
+            var roundedString = num.toFixed(2);
+            var rounded_pop = Number(roundedString) ;
+
+
+            
 
             document.getElementById("all-countries").innerHTML += 
             `<div class="grid-item">
                 <div class="flag-con" style="min-height: 50%; background-color: white;"><img src="${data[key]["flags"]["png"]}"></div>
-                <div class="short-desc" style="min-height: 50%;"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>${"Population: "+ data[key]["population"]}</p><p>${"Region: " + data[key]["region"]}</p><p>Language: Polish</p><p style="padding-top: 20px;"><a href="#">Read more </a></p> </div>
+                <div class="short-desc" style="min-height: 50%;"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p>Language: ${edited_lan}</p><p style="padding-top: 20px;"><a href="#">Read more </a></p> </div>
             </div>";`
 
             
@@ -287,8 +332,10 @@ async function getapi(url) {
 
         //['name', 'tld', 'cca2', 'ccn3', 'cca3', 'cioc', 'independent', 'status', 'unMember', 'currencies', 'idd', 'capital', 'altSpellings', 'region', 'subregion', 'languages', 
         //'translations', 'latlng', 'landlocked', 'borders', 'area', 'demonyms', 'flag', 'maps', 'population', 'fifa', 'car', 'timezones', 'continents', 'flags', 'coatOfArms', 'startOfWeek', 'capitalInfo', 'postalCode']    
-
-            
+        var element = document.getElementById("all-countries");
+        var numberOfChildren = element.children.length;
+        console.log(numberOfChildren)
+        document.getElementById("how-many").innerHTML="Number of results: "+numberOfChildren     
         }
 
         // Calling that async function

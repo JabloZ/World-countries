@@ -51,18 +51,17 @@
 
         .grid-container {
         
-        display: grid;
-        grid-template-columns: auto auto auto auto auto auto auto auto;
-        margin-left: 5vw;
-        margin-right: 5vw;
-        
-        grid-template-columns: 20% 5% 20% 5% 20% 5% 20% 5%;
+            display: grid;
+            grid-template-columns: auto auto auto auto auto auto auto auto;
+            margin-left: 5vw;
+            margin-right: 5vw;
+            grid-template-columns: 23% 2% 23% 2% 23% 2% 23% 2%;
         
         
         }
         .grid-container .grid-item {
             min-width: 20vw;
-            min-height: 40vh;
+            min-height: 50vh;
             background-color: rgba(117, 77, 129, 0.8);
             margin: 18px;
             font-size: 30px;
@@ -89,15 +88,16 @@
             align-items: center;
             text-align: center;
             text-decoration: none;
-            color: rgb(0, 0, 0);
-            
+            color: white;
+            font-size: 18px;
+
             padding: 18px;
             min-height: 100%;
         }
         nav .nav-container .world-c{
-            font-size: 32px;
+            font-size: 24px;
             margin-left: 5vw;
-            margin-right: 5vw;
+            
             color: rgb(236, 236, 236);
         }
         nav .nav-container a:hover{
@@ -114,7 +114,9 @@
             min-height: 100%;
             min-width: 100px;
         }
-
+        .input-group{
+            min-height: 6vh;
+        }
         li {
         float: left;
         }
@@ -174,7 +176,7 @@
         }
         .short-desc a{
             text-decoration: none;
-            background-image: linear-gradient(to right, rgb(136, 41, 165) , rgb(149, 76, 172));
+            background-image: linear-gradient(to right, rgb(187, 72, 223) , rgb(168, 71, 197));
             padding: 12px;
             color: white;
             border-radius: 6px;
@@ -188,16 +190,8 @@
         .flag-con{
             max-width: 100%;
         }
-        @media only screen and (max-width: 1000px){
-            .grid-container{
-            
-            grid-template-columns: 45% 5% 45% 5%;
-            }
-            .grid-container .grid-item{
-                min-width: 40%;
-            }
 
-        }
+        
         .top-div{
             min-height: 20vh;
             display: flex;
@@ -211,7 +205,33 @@
         .top-div p{
             margin: 18px;
         }
+        .map-c
+        {
+            justify-content: center;
+            font-size: 16px;
+            margin-left: 0;
+            margin-right: 5vw;
+            min-width: 10vw;
+            text-align: center;
+        }
+        .form-control{
+            max-width: 80%;
+            margin-left: 5vw;
+            
+        }
+        .input-group button{
+            background-image: linear-gradient(to right, rgb(187, 83, 219) , rgb(146, 48, 175));
+        }
         
+        @media only screen and (max-width: 1000px){
+            .grid-container{
+            
+            grid-template-columns: 45% 5% 45% 5%;
+            }
+            .grid-container .grid-item{
+                min-width: 40%;
+            }
+        }
         @media only screen and (max-width: 600px){
             .grid-container{
             
@@ -221,8 +241,21 @@
                 min-width: 40%;
             }
 
+            nav .nav-container{
+                font-size: 16px;
+                margin: 0;
+                padding: 6px;
+            }
+            nav .nav-container .world-c, nav .nav-container .map-c{
+                font-size: 16px;
+                padding: 6px;
+                margin: 0;
+            }
+            
+            nav .nav-container button{
+                min-width: 10px;
+            }
         }
-
 </style>
 <body>
 <nav>
@@ -234,24 +267,20 @@
                     <div class="input-group">
                         
                            
-                        <li class="dropdown">
-                            <a href="javascript:void(0)">Filter by</a>
-                            <div class="dropdown-content">
-                                  <a href="#">Link 1</a>
-                                  <a href="#">Link 2</a>
-                                  <a href="#">Link 3</a>
-                            </div>
-                        </li>
                         
-                        <input type="hidden" name="search_param" value="all" id="search_param">         
-                        <input type="text" class="form-control" name="x" placeholder="Search term...">
+                        
+                              
+                        <input type="text" class="form-control" name="x" placeholder="Search for a country...">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Search</button>
+                            <button class="btn btn-default" type="button" onclick="search-clicked({})">Search</button>
                         </span>
+
+                        
                     </div>
                 </div>
             </div>
         </div>
+    <a href="#" class="map-c">Map</a>
     </div>
 </nav>   
 <div class="main-d">
@@ -265,15 +294,12 @@
     <script>
         const api_url = 
         "https://restcountries.com/v3.1/all";
-    
-// Defining async function
-async function getapi(url) {
-    
-        // Storing response
+        
+    async function getapi(url, ) {
+
         const response = await fetch(url);
 
         var data = await response.json();
-        var edited_lan=""
         for (var key in data) {
             try {
                 var capital=data[key]['capital']  
@@ -281,21 +307,7 @@ async function getapi(url) {
             catch(err) {
                 var capital="No capital"
             }
-
-
-            try {
-                var languages=""
-                ob=data[key]['languages']
-                for (var key2 in ob) {
-                    languages=languages+" "+ob[key2]+","
-                }
-                var edited_lan = languages.slice(0, -1)
-            }
-            catch(err) {
-                
-                var capital="No capital"
-            }
-            
+       
             var a = data[key]["population"]
             if (a>1000 && a<1000000){
                 var num = Number(a/1000)
@@ -323,7 +335,7 @@ async function getapi(url) {
             document.getElementById("all-countries").innerHTML += 
             `<div class="grid-item">
                 <div class="flag-con" style="min-height: 50%; background-color: white;"><img src="${data[key]["flags"]["png"]}"></div>
-                <div class="short-desc" style="min-height: 50%;"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p>Language: ${edited_lan}</p><p style="padding-top: 20px;"><a href="#">Read more </a></p> </div>
+                <div class="short-desc" style="min-height: 50%;"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a href="#">Read more </a></p> </div>
             </div>";`
 
             

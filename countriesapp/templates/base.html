@@ -35,7 +35,7 @@
             box-sizing: border-box;
             
         }
-
+        /*/ Top navbar /*/
         nav {
             text-align: center;
             min-width: 100%;
@@ -49,31 +49,6 @@
             
         }
 
-        .grid-container {
-        
-            display: grid;
-            grid-template-columns: auto auto auto auto auto auto auto auto;
-            margin-left: 5vw;
-            margin-right: 5vw;
-            grid-template-columns: 23% 2% 23% 2% 23% 2% 23% 2%;
-        
-        
-        }
-        .grid-container .grid-item {
-            min-width: 20vw;
-            min-height: 40vh;
-            max-height: 60vh;
-            background-color: rgba(117, 77, 129, 0.8);
-            margin: 18px;
-            font-size: 30px;
-            text-align: left;
-            text-decoration: none;
-             
-            color: white;
-            display: flex;
-            flex-direction: column;
-
-        }
         nav .nav-container{
             
             min-height: 100%;
@@ -115,53 +90,38 @@
             min-height: 100%;
             min-width: 100px;
         }
+        /*/ Everything inside /*/
+        .grid-container {
+        
+            display: grid;
+            grid-template-columns: auto auto auto auto auto auto auto auto;
+            margin-left: 5vw;
+            margin-right: 5vw;
+            grid-template-columns: 23% 2% 23% 2% 23% 2% 23% 2%;
+        }
+        .grid-container .grid-item {
+            min-width: 20vw;
+            min-height: 40vh;
+            max-height: 60vh;
+            background-color: rgba(117, 77, 129, 0.8);
+            margin: 18px;
+            font-size: 30px;
+            text-align: left;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
         .input-group{
             min-height: 6vh;
         }
-        li {
-        float: left;
-        }
-
-        li a{
-        display: inline-block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        }
-
-        li.dropdown {
-
-        display: inline-block;
-        }
-
-        .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        }
-
-        .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-        text-align: left;
-        }
-
-        .dropdown-content a:hover {background-color: #f1f1f1;}
-
-        .dropdown:hover .dropdown-content {
-        display: block;
-        }
+        
         .container{
             margin: 0;
             padding: 12px;
             max-height: 80%;
-            min-width: 40%;
+            min-width: 50%;
+            max-width: 50%;
         }
         .row{
             min-width: 50%;
@@ -204,7 +164,8 @@
             margin-right: 5%;
         }
         .top-div p{
-            margin: 18px;
+            margin-left: 18px;
+            margin-bottom: 0px;
         }
         .map-c
         {
@@ -222,8 +183,123 @@
         }
         .input-group button{
             background-image: linear-gradient(to right, rgb(187, 83, 219) , rgb(146, 48, 175));
-        }
         
+        }
+
+
+        /*/ Dropdown for searching through region/*/
+        .dropbtn {
+            background-color: rgb(146, 48, 175);
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-left: 18px;
+            min-width: 140px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            font-size: 16px;
+            float: left;
+            margin-left: 18px;
+            display: none;
+            position: absolute;
+            background-color: #ddacee;
+            min-width: 100%;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 16px 20px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            transition: 0.8s;
+            background-color: #ab70be;
+        }
+        .c-all{
+            
+            visibility: hidden;
+            z-index: 11;
+            background-color: rgb(187, 163, 209);
+            position: fixed;
+            left:10%;
+            margin: 0;
+            top: 10%;
+            min-width: 80%;
+            min-height: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .c-all .c-item-c{
+            min-width: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        .c-all .c-item{
+            min-width: 50%;
+            min-height: 10vh;
+            background-color: #8a36b1;
+            display: flex;
+            
+        }
+        .c-all .c-item a{
+            min-width: 10vw;
+            text-align: center;
+            border-radius: 5vw;
+            text-decoration: none;
+            padding: 18px;
+            background-color: rgb(191, 72, 228);
+            color: white;
+            margin: 18px;
+        }
+        .c-all .c-item p{
+            font-size: 24px;
+            min-width: 10vw;
+            text-align: center;
+            
+            text-decoration: none;
+            padding: 18px;
+            
+            color: white;
+            margin: 18px;
+        }
+
+
+
+        .c-all .c-item-d{
+            color:white;
+            font-size: 18px;
+            padding: 18px;
+            min-width: 80%;
+            display: flex;
+            flex-direction: row;
+            min-height: 70vh;
+            max-height: 70vh;
+            background-color: rgba(117, 77, 129, 0.8);
+        }
+       
+        
+        /*/ Media things (if screen is smaller) /*/
         @media only screen and (max-width: 1000px){
             .grid-container{
             
@@ -259,61 +335,111 @@
         }
 </style>
 <body>
-<nav>
-    <div class="nav-container">
-    <a href="#" class="world-c" onclick="search_clicked()">World countries</a>
-        <div class="container">
-            <div class="row">    
-                <div class="col-xs-8 col-xs-offset-2">
-                    <div class="input-group">
-                        
-                           
-                        
-                        
-                              
-                        <input type="text" class="form-control" name="x" id ="country-id" placeholder="Search for a country... (Alt + S)">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" onclick="search_clicked()" accesskey="s">Search</button>
-                        </span>
-
-                        
-                    </div>
-                </div>
+    <div class="c-all" id="c-all">
+        
+        <div class="c-item-c">
+            <div class="c-item" style="justify-content: flex-start; ">
+                <p>Country: Poland</p>
+            </div>
+            <div class="c-item" style="align-items: center; justify-content: flex-end;">
+                <a href="#" onclick="close_win_show()">Close</a>
             </div>
         </div>
-    <a href="#" class="map-c">Map</a>
+        <div class="c-item-d">
+           <p>aaa</p>
+        </div>
     </div>
-</nav>   
-<div class="main-d">
-    <div class="top-div">
-    <p id="how-many"></p>
-    </div>
-    <div class="grid-container" id="all-countries">
-        
-    </div>
-</div> 
+        <nav>
+            <div class="nav-container">
+            <a href="#" class="world-c" onclick="search_clicked()">World countries</a>
+                <div class="container">
+                    <div class="row">    
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" name="x" id ="country-id" placeholder="Search for a country... (Alt + S)">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" onclick="search_clicked()" accesskey="s">Search</button>
+                                </span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <a href="#" class="map-c">Map</a>
+            <a href="#" class="map-c">Statistics</a>
+            </div>
+        </nav>   
+        <div class="main-d">
+            
+            <div class="top-div">
+                <div class="dropdown">
+                    <button class="dropbtn" id="reg-drop">Sort by region</button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="region_clicked('')" id >All</a>
+                        <a href="#" onclick="region_clicked('Africa')" id >Africa</a>
+                        <a href="#" onclick="region_clicked('Americas')">Americas</a>
+                        <a href="#" onclick="region_clicked('Asia')">Asia</a>
+                        <a href="#" onclick="region_clicked('Europe')">Europe</a>
+                        <a href="#" onclick="region_clicked('Oceania')">Oceania</a>
+                    </div>
+                </div>
+                <p id="how-many"></p>
+            </div>
+            <div class="grid-container" id="all-countries">
+                
+            </div>
+        </div> 
+    
     <script>
+        var region_searched=""
         var searched=""
+    function close_win_show(){
+        document.getElementById('c-all').style="visibility:hidden;"
+    }
+    function region_clicked(region_passed){
+        if (region_passed!=""){
+            document.getElementById("reg-drop").innerHTML=region_passed
+        }
+        else if (region_passed==""){
+            document.getElementById("reg-drop").innerHTML="Sort by region"
+        }
+        region_searched=region_passed
+        document.getElementById("all-countries").innerHTML=""
+        document.getElementById("how-many").innerHTML=""
+        getapi(api_url);
+    }
     function search_clicked(){
         searched=document.getElementById('country-id').value
         document.getElementById("all-countries").innerHTML=""
+        document.getElementById("how-many").innerHTML=""
         getapi(api_url);
 
+    }
+    function readmore_c(c_key){
+        console.log(c_key)
+        document.getElementById('c-all').style="visibility:visible;"
     }
         const api_url = 
         "https://restcountries.com/v3.1/all";
         
     async function getapi(url, ) {
-
+        document.getElementById("reg-drop").style="visibility:hidden;"
         const response = await fetch(url);
 
         var data = await response.json();
 
         for (var key in data)
-        
+            
             {
+                
             if (searched!=""){
                 if ((data[key]["name"]["common"].toLowerCase()).includes(searched)===false){
+                    continue;
+                }
+            }
+            if (region_searched!=""){
+                if (data[key]["region"]!=region_searched){
                     continue;
                 }
             }
@@ -351,7 +477,7 @@
             document.getElementById("all-countries").innerHTML += 
             `<div class="grid-item">
                 <div class="flag-con" style="min-height: 50%; background-color: white;"><img src="${data[key]["flags"]["png"]}"></div>
-                <div class="short-desc" style="min-height: 50%;"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a href="#">Read more </a></p> </div>
+                <div class="short-desc" style="min-height: 50%;"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a href="#" onclick="readmore_c(${key})">Read more </a></p> </div>
             </div>";`
 
             
@@ -366,8 +492,10 @@
         document.getElementById("how-many").innerHTML="Number of results: "+numberOfChildren 
 
         searched=document.getElementById('country-id').value="" 
-        searched=""   
+        searched=""  
+        document.getElementById("reg-drop").style="visibility:visible;"
         }
+        
 
         // Calling that async function
         console.log('wor')

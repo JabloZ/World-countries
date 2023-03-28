@@ -32,7 +32,7 @@
             font-family: var(--bs-body-font-family);
             line-height: normal !important;
             background-color: #622a79;
-            
+            box-sizing: border-box;
             
         }
 
@@ -61,7 +61,8 @@
         }
         .grid-container .grid-item {
             min-width: 20vw;
-            min-height: 50vh;
+            min-height: 40vh;
+            max-height: 60vh;
             background-color: rgba(117, 77, 129, 0.8);
             margin: 18px;
             font-size: 30px;
@@ -260,7 +261,7 @@
 <body>
 <nav>
     <div class="nav-container">
-    <a href="#" class="world-c">World countries</a>
+    <a href="#" class="world-c" onclick="search_clicked()">World countries</a>
         <div class="container">
             <div class="row">    
                 <div class="col-xs-8 col-xs-offset-2">
@@ -270,9 +271,9 @@
                         
                         
                               
-                        <input type="text" class="form-control" name="x" placeholder="Search for a country...">
+                        <input type="text" class="form-control" name="x" id ="country-id" placeholder="Search for a country... (Alt + S)">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" onclick="search-clicked({})">Search</button>
+                            <button class="btn btn-default" type="button" onclick="search_clicked()" accesskey="s">Search</button>
                         </span>
 
                         
@@ -292,6 +293,13 @@
     </div>
 </div> 
     <script>
+        var searched=""
+    function search_clicked(){
+        searched=document.getElementById('country-id').value
+        document.getElementById("all-countries").innerHTML=""
+        getapi(api_url);
+
+    }
         const api_url = 
         "https://restcountries.com/v3.1/all";
         
@@ -300,7 +308,15 @@
         const response = await fetch(url);
 
         var data = await response.json();
-        for (var key in data) {
+
+        for (var key in data)
+        
+            {
+            if (searched!=""){
+                if ((data[key]["name"]["common"].toLowerCase()).includes(searched)===false){
+                    continue;
+                }
+            }
             try {
                 var capital=data[key]['capital']  
             }
@@ -347,7 +363,10 @@
         var element = document.getElementById("all-countries");
         var numberOfChildren = element.children.length;
         console.log(numberOfChildren)
-        document.getElementById("how-many").innerHTML="Number of results: "+numberOfChildren     
+        document.getElementById("how-many").innerHTML="Number of results: "+numberOfChildren 
+
+        searched=document.getElementById('country-id').value="" 
+        searched=""   
         }
 
         // Calling that async function

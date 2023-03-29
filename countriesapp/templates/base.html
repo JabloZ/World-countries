@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style> 
         ::-webkit-scrollbar {
-        width: 10px;
+        width: 20px;
         }
 
         ::-webkit-scrollbar-track {
@@ -29,6 +29,7 @@
         }
         * {box-sizing: border-box; margin:0;}
         body{
+            
             font-family: var(--bs-body-font-family);
             line-height: normal !important;
             background-color: #622a79;
@@ -237,14 +238,14 @@
             
             visibility: hidden;
             z-index: 11;
-            background-color: aliceblue;
-            
+            background-color: rgba(117, 77, 129, 0.8);
             position: fixed;
             left:20%;
             margin: 0;
             top: 10%;
             bottom:10%;
             min-width: 60%;
+            max-width: 60%;
             min-height: 80%;
             display: flex;
             flex-direction: column;
@@ -290,10 +291,8 @@
             font-size: 24px;
             min-width: 10vw;
             text-align: center;
-            
             text-decoration: none;
             padding: 18px;
-            
             color: white;
             margin: 18px;
         }
@@ -301,10 +300,12 @@
 
 
         .c-all .c-item-d{
+            word-wrap: break-word;
             color:white;
             font-size: 18px;
             padding: 18px;
             min-width: 100%;
+            max-width: 100%;
             display: flex;
             flex-direction: column;
             min-height: 70vh;
@@ -368,38 +369,65 @@
                 align-items: normal;
             }
         }
+        h5{
+            font-size: 32px;
+            padding-bottom: 13px;
+            margin-top:13px;
+            margin-bottom:13px;
+            padding-top: 13px;
+            max-width: 30%;
+            border-bottom: 2px solid rgb(238, 170, 255);
+        }
+        p1{
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+        }
+        .c-all .c-item-d a{
+            color: rgb(206, 255, 236);
+            text-decoration: none;
+            font-size: 24px;
+        }
 </style>
 <body>
     <div class="c-all" id="c-all">
                
         <div class="c-item-c">
             <div class="c-item" style="justify-content: flex-start; ">
-                <p>Country: Poland <img src="https://flagcdn.com/w320/gt.png"></p>
+                <p id="cname">Country: Poland <img src="https://flagcdn.com/w320/gt.png"></p>
                 
             </div>
             <div class="c-item" style="align-items: center; justify-content: flex-end;">
-                <a href="#" onclick="close_win_show()">Close</a>
+                <a onclick="close_win_show()">Close</a>
             </div>
         </div>
         <div class="c-item-d">
-            <p id="cpopulation">Cars side: </p>
-            <p id="cregion">Cars signs: </p>
-            <p id="ccapital">Independent: </p>
-
-            <p id="ccurrencies">Currencies: </p>
-            <p id="ccarsside">Cars side: </p>
-            <p id="ccarssign">Cars signs: </p>
-            <p id="cindependent">Independent: </p>
-            <p id="cmaps">Maps link: </p>
+            <h5>Basic info:</h5>
+            <p id="cpopulation">Population: </p>
+            <p id="cregion">Region: </p>
+            <p id="ccapital">Capital: </p>
             <p id="clanguages">Languages: </p>
+
+            <h5>Geography</h5>
+            <p id="ccontinents">On continents: </p>
+            <p id="cmaps">Maps link: </p>
+            <p id="carea">Landmass area: </p>
+            <p id="ctimezones">Timezone(s): </p>
             <p id="ccapitalinfo">Capital placement: </p>
 
+            <h5>International</h5>
+            <p id="cunmember">Un member: </p>
+            <p id="cborders">Bordering: </p>
+            <p id="cindependent">Independent: </p>
+
+            <h5>Internet</h5>
             <p id="ctld">Domain: </p>
             <p id="ccca3">Shortcut: </p>
-            <p id="ctimezones">Timezone(s): </p>
-            <p id="carea">Landmass area: </p>
-            <p id="ccontinents">On continents: </p>
-
+            
+            <h5>National</h5>
+            <p id="ccarssigns">Cars signs: </p>
+            <p id="ccarsside">Cars side: </p>
+            <p id="ccurrencies">Currencies: </p>
         </div>
     </div>
         <nav>
@@ -451,6 +479,7 @@
         document.getElementById('c-all').style="visibility:hidden;"
     }
     function region_clicked(region_passed){
+        document.getElementById('c-all').style="visibility:hidden;"
         if (region_passed!=""){
             document.getElementById("reg-drop").innerHTML=region_passed
         }
@@ -463,21 +492,160 @@
         getapi(api_url);
     }
     function search_clicked(){
+        document.getElementById('c-all').style="visibility:hidden;"
         searched=document.getElementById('country-id').value
         document.getElementById("all-countries").innerHTML=""
         document.getElementById("how-many").innerHTML=""
         getapi(api_url);
-
+        
     }
+    const api_url = "https://restcountries.com/v3.1/all";
+
+
     function readmore_c(c_key){
         //currencies (symbol and name), cars (side and signs), independent, maps, unMember, for languages, capitalInfo, tld[0](domena), cca3(skrot 3 litery), for timezones,  area, continents
-        console.log(c_key)
         document.getElementById('c-all').style="visibility:visible;"
+        getapi_readmore(api_url, c_key);
 
     }
-        const api_url = 
-        "https://restcountries.com/v3.1/all";
+
+    async function getapi_readmore(url, key) {
+        const response = await fetch(url);
+        var data = await response.json();
         
+        
+        document.getElementById("cname").innerHTML=`Country: ${data[key]["name"]["common"]} <img src="${data[key]["flags"]["png"]}">`
+        var a = data[key]["population"]
+            if (a>1000 && a<1000000){
+                var num = Number(a/1000)
+                var to_add = "K"
+            }
+            else if(a>=1000000 && a<1000000000){
+                var num = Number(a/1000000)
+                var to_add = "M"
+            }
+            else if(a>=1000000000){
+                var num = Number(a/1000000000)
+                var to_add = "B"
+            }
+            else{
+                var num = Number(a)
+                var to_add = " "
+            }
+            
+            var roundedString = num.toFixed(2);
+            var rounded_pop = Number(roundedString) ;
+            
+        document.getElementById("cpopulation").innerHTML='<p1>Population:</p1> '+rounded_pop+ " " + to_add
+        document.getElementById("cregion").innerHTML="<p1>Region:</p1> "+ data[key]["region"]
+        try {
+            var capital=data[key]['capital']  
+            document.getElementById("ccapital").innerHTML="<p1>Capital: </p1>" + capital
+        }
+        catch(err) {
+            var capital="No capital"
+            document.getElementById("ccapital").innerHTML=capital
+        }
+        try {
+            var langs=""
+            for (const lang in data[key]['languages']){
+                
+                langs=langs+data[key]['languages'][lang]+", "
+            }  
+            langs=langs.slice(0, -2);
+            document.getElementById("clanguages").innerHTML="<p1>Official languages: </p1>" + langs
+        }
+        catch(err) {
+            var langs="No official languages"
+            document.getElementById("clanguages").innerHTML=langs
+        }
+        
+        document.getElementById("ccontinents").innerHTML="<p1>Continent: </p1>"+data[key]['continents'][0]
+        document.getElementById("cmaps").innerHTML=`<a href="${data[key]["maps"]["googleMaps"]}" target="_blank" rel="noopener noreferrer"><p1>Localization: </p1>On google maps >></a>`
+
+        var timezones=""
+        for (const timezone in data[key]['timezones']){
+            timezones=timezones+data[key]['timezones'][timezone]+", "
+        }  
+        timezones=timezones.slice(0, -2);
+        document.getElementById("ctimezones").innerHTML="<p1>Timezones: </p1>"+timezones
+        document.getElementById("carea").innerHTML="<p1>Land area: </p1>"+data[key]["area"] + " km^2"
+
+        try{
+            document.getElementById("ccapitalinfo").innerHTML="<p1>Capital coordinates: </p1>"+data[key]['capitalInfo']["latlng"]
+        }
+        catch(err){
+            document.getElementById("ccapitalinfo").innerHTML="No capital"
+        }
+        var unmem=data[key]['unMember']
+        if (unmem===false){
+            document.getElementById("cunmember").innerHTML="<p1>UN member: </p1> Not a member of UN"
+        }
+        else{
+            document.getElementById("cunmember").innerHTML="<p1>UN member: </p1> A member of UN"
+        }
+
+        try{
+            var i=0
+            var borders=""
+            for (const bordering in data[key]['borders']){
+                borders=borders+data[key]['borders'][bordering]+", "
+                i=i+1
+            } 
+            borders=borders.slice(0, -2);
+            document.getElementById("cborders").innerHTML=`<p1>Bordering(${i}): </p1>`+borders+ ""
+        }
+        catch(err){
+            document.getElementById("cborders").innerHTML="<p1>Bordering: </p1> none"
+        }
+
+        var independent=data[key]['independent']
+        try{
+            if (independent===false){
+                document.getElementById("cindependent").innerHTML="<p1>Independent: </p1> No"
+            }
+            else{
+                document.getElementById("cindependent").innerHTML="<p1>Independent: </p1> Yes"
+            }
+        }
+        catch(err){
+            document.getElementById("cindependent").innerHTML="<p1>Independent: </p1> It's complicated"
+        }
+
+        try{
+            document.getElementById("ctld").innerHTML="<p1>Internet domain: </p1>"+data[key]['tld'][0]
+        }
+        catch(err){
+            document.getElementById("ctld").innerHTML="<p1>Internet domain: Not specified</p1>"
+        }
+
+        try{
+            document.getElementById("ccca3").innerHTML="<p1>Country name shortcut: </p1>"+data[key]['cca3']
+        }
+        catch(err){
+            document.getElementById("ccca3").innerHTML="<p1>Shortcut: Not specified</p1>"
+        }
+
+        document.getElementById("ccarssigns").innerHTML="<p1>Cars signs: </p1>"+data[key]["car"]['signs'][0]
+        document.getElementById("ccarsside").innerHTML="<p1>Cars side: </p1>"+data[key]["car"]['side']
+        
+        
+        try{
+            var currencies=""
+            for (const currency in data[key]['currencies']){
+                currencies=currencies+`| ${data[key]['currencies'][currency]["name"]}, ${data[key]['currencies'][currency]["symbol"]}`+" | "
+            } 
+            
+            document.getElementById("ccurrencies").innerHTML="<p1>Currencies: </p1>"+currencies
+        }
+        catch(err){
+            document.getElementById("ccurrencies").innerHTML="<p1>Currencies: </p1> no currency"
+        }
+
+    }
+
+
+
     async function getapi(url, ) {
         document.getElementById("reg-drop").style="visibility:hidden;"
         const response = await fetch(url);
@@ -532,7 +700,7 @@
             document.getElementById("all-countries").innerHTML += 
             `<div class="grid-item">
                 <div class="flag-con" style="min-height: 50%; background-color: white;"><img src="${data[key]["flags"]["png"]}"></div>
-                <div class="short-desc" style="min-height: 50%;" id="${key}"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a href="#" onclick="readmore_c(${key})">Read more </a></p> </div>
+                <div class="short-desc" style="min-height: 50%;" id="${key}"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a onclick="readmore_c(${key})">Read more </a></p> </div>
             </div>";`
 
             

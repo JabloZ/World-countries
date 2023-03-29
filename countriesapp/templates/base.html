@@ -237,12 +237,14 @@
             
             visibility: hidden;
             z-index: 11;
-            background-color: rgb(187, 163, 209);
+            background-color: aliceblue;
+            
             position: fixed;
-            left:10%;
+            left:20%;
             margin: 0;
             top: 10%;
-            min-width: 80%;
+            bottom:10%;
+            min-width: 60%;
             min-height: 80%;
             display: flex;
             flex-direction: column;
@@ -251,11 +253,23 @@
             
         }
         .c-all .c-item-c{
+            
             min-width: 100%;
             display: flex;
             flex-direction: row;
+            
+        }
+        .c-all .c-item-c img{
+
+            border: #490e55 1px solid;
+            aspect-ratio: 16/9;
+            width: 140px;
+            min-height: 70%;
+           
+            
         }
         .c-all .c-item{
+            border-bottom: #490e55 1px dashed;
             min-width: 50%;
             min-height: 10vh;
             background-color: #8a36b1;
@@ -290,12 +304,19 @@
             color:white;
             font-size: 18px;
             padding: 18px;
-            min-width: 80%;
+            min-width: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             min-height: 70vh;
             max-height: 70vh;
             background-color: rgba(117, 77, 129, 0.8);
+            line-height: 100%;
+            overflow: auto;
+        }
+        .c-all .c-item-d p{
+            border-bottom: #490e55 1px dashed;
+            max-height: 6%;
+            min-height: 40px;
         }
        
         
@@ -303,16 +324,20 @@
         @media only screen and (max-width: 1000px){
             .grid-container{
             
-            grid-template-columns: 45% 5% 45% 5%;
+            grid-template-columns:45% 5% 45% 5%;
             }
             .grid-container .grid-item{
                 min-width: 40%;
+            }
+            .c-all{
+                left:10%;
+                min-width: 80%;
             }
         }
         @media only screen and (max-width: 600px){
             .grid-container{
             
-            grid-template-columns: 90%;
+            grid-template-columns: 100%;
             }
             .grid-container .grid-item{
                 min-width: 40%;
@@ -332,21 +357,49 @@
             nav .nav-container button{
                 min-width: 10px;
             }
+            .c-all .c-item-c img{
+            
+                visibility: hidden;
+                width: 20%;
+            }
+            .c-all{
+                max-width: 100%;
+                left:0%;
+                align-items: normal;
+            }
         }
 </style>
 <body>
     <div class="c-all" id="c-all">
-        
+               
         <div class="c-item-c">
             <div class="c-item" style="justify-content: flex-start; ">
-                <p>Country: Poland</p>
+                <p>Country: Poland <img src="https://flagcdn.com/w320/gt.png"></p>
+                
             </div>
             <div class="c-item" style="align-items: center; justify-content: flex-end;">
                 <a href="#" onclick="close_win_show()">Close</a>
             </div>
         </div>
         <div class="c-item-d">
-           <p>aaa</p>
+            <p id="cpopulation">Cars side: </p>
+            <p id="cregion">Cars signs: </p>
+            <p id="ccapital">Independent: </p>
+
+            <p id="ccurrencies">Currencies: </p>
+            <p id="ccarsside">Cars side: </p>
+            <p id="ccarssign">Cars signs: </p>
+            <p id="cindependent">Independent: </p>
+            <p id="cmaps">Maps link: </p>
+            <p id="clanguages">Languages: </p>
+            <p id="ccapitalinfo">Capital placement: </p>
+
+            <p id="ctld">Domain: </p>
+            <p id="ccca3">Shortcut: </p>
+            <p id="ctimezones">Timezone(s): </p>
+            <p id="carea">Landmass area: </p>
+            <p id="ccontinents">On continents: </p>
+
         </div>
     </div>
         <nav>
@@ -417,8 +470,10 @@
 
     }
     function readmore_c(c_key){
+        //currencies (symbol and name), cars (side and signs), independent, maps, unMember, for languages, capitalInfo, tld[0](domena), cca3(skrot 3 litery), for timezones,  area, continents
         console.log(c_key)
         document.getElementById('c-all').style="visibility:visible;"
+
     }
         const api_url = 
         "https://restcountries.com/v3.1/all";
@@ -477,7 +532,7 @@
             document.getElementById("all-countries").innerHTML += 
             `<div class="grid-item">
                 <div class="flag-con" style="min-height: 50%; background-color: white;"><img src="${data[key]["flags"]["png"]}"></div>
-                <div class="short-desc" style="min-height: 50%;"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a href="#" onclick="readmore_c(${key})">Read more </a></p> </div>
+                <div class="short-desc" style="min-height: 50%;" id="${key}"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a href="#" onclick="readmore_c(${key})">Read more </a></p> </div>
             </div>";`
 
             

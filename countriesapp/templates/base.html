@@ -388,6 +388,7 @@
             text-decoration: none;
             font-size: 24px;
         }
+
 </style>
 <body>
     <div class="c-all" id="c-all">
@@ -398,7 +399,7 @@
                 
             </div>
             <div class="c-item" style="align-items: center; justify-content: flex-end;">
-                <a onclick="close_win_show()">Close</a>
+                <a onclick="close_win_show()" href="javascript:void(0)">Close</a>
             </div>
         </div>
         <div class="c-item-d">
@@ -700,7 +701,7 @@
             document.getElementById("all-countries").innerHTML += 
             `<div class="grid-item">
                 <div class="flag-con" style="min-height: 50%; background-color: white;"><img src="${data[key]["flags"]["png"]}"></div>
-                <div class="short-desc" style="min-height: 50%;" id="${key}"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a onclick="readmore_c(${key})">Read more </a></p> </div>
+                <div class="short-desc" style="min-height: 50%;" id="${key}"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a onclick="readmore_c(${key})" href="javascript:void(0)">Read more </a></p> </div>
             </div>";`
 
             

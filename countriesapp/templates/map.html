@@ -1,8 +1,15 @@
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>This is an example for the <base> element</title>
-        <base href="http://www.example.com/news/index.html">
+
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'media/Bez nazwy2.png' %}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             *{
                 margin: 0;
@@ -21,10 +28,175 @@
             svg path{
                 cursor: pointer;
             }
+            .c-all{
             
+            visibility: hidden;
+            z-index: 11;
+            background-color: rgba(117, 77, 129, 0.8);
+            position: fixed;
+            left:20%;
+            margin: 0;
+            top: 10%;
+            bottom:10%;
+            min-width: 60%;
+            max-width: 60%;
+            min-height: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+            }
+            .c-all .c-item-c{
+                
+                min-width: 100%;
+                display: flex;
+                flex-direction: row;
+                
+            }
+            .c-all .c-item-c img{
+
+                border: #490e55 1px solid;
+                aspect-ratio: 16/9;
+                width: 140px;
+                min-height: 70%;
+            
+                
+            }
+            .c-all .c-item{
+                border-bottom: #490e55 1px dashed;
+                min-width: 50%;
+                min-height: 10vh;
+                background-color: #8a36b1;
+                display: flex;
+                
+            }
+            .c-all .c-item a{
+                min-width: 10vw;
+                text-align: center;
+                border-radius: 5vw;
+                text-decoration: none;
+                padding: 18px;
+                background-color: rgb(191, 72, 228);
+                color: white;
+                margin: 18px;
+            }
+            .c-all .c-item p{
+                font-size: 24px;
+                min-width: 10vw;
+                text-align: center;
+                text-decoration: none;
+                padding: 18px;
+                color: white;
+                margin: 18px;
+            }
+
+
+
+            .c-all .c-item-d{
+                word-wrap: break-word;
+                color:white;
+                font-size: 18px;
+                padding: 18px;
+                min-width: 100%;
+                max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                min-height: 70vh;
+                max-height: 70vh;
+                background-color: rgba(117, 77, 129, 0.8);
+                line-height: 100%;
+                overflow: auto;
+            }
+            .c-all .c-item-d p{
+                border-bottom: #490e55 1px dashed;
+                max-height: 6%;
+                min-height: 40px;
+            }
+        
+            
+            /*/ Media things (if screen is smaller) /*/
+            @media only screen and (max-width: 1000px){
+                .c-all{
+                    left:10%;
+                    min-width: 80%;
+                }
+            }
+            @media only screen and (max-width: 600px){
+                
+                .c-all .c-item-c img{
+                
+                    visibility: hidden;
+                    width: 20%;
+                }
+                .c-all{
+                    max-width: 100%;
+                    left:0%;
+                    align-items: normal;
+                }
+            }
+            h5{
+                font-size: 32px;
+                padding-bottom: 13px;
+                margin-top:13px;
+                margin-bottom:13px;
+                padding-top: 13px;
+                max-width: 30%;
+                border-bottom: 2px solid rgb(238, 170, 255);
+            }
+            p1{
+                color: white;
+                text-decoration: none;
+                font-size: 24px;
+            }
+            .c-all .c-item-d a{
+                color: rgb(206, 255, 236);
+                text-decoration: none;
+                font-size: 24px;
+            }
         </style>
     </head>
     <body>
+        <div class="c-all" id="c-all">
+               
+            <div class="c-item-c">
+                <div class="c-item" style="justify-content: flex-start; ">
+                    <p id="cname">Country: Poland <img src="https://flagcdn.com/w320/gt.png"></p>
+                    
+                </div>
+                <div class="c-item" style="align-items: center; justify-content: flex-end;">
+                    <a onclick="close_win_show()" href="javascript:void(0)">Close</a>
+                </div>
+            </div>
+            <div class="c-item-d">
+                <h5>Basic info:</h5>
+                <p id="cpopulation">Population: </p>
+                <p id="cregion">Region: </p>
+                <p id="ccapital">Capital: </p>
+                <p id="clanguages">Languages: </p>
+    
+                <h5>Geography</h5>
+                <p id="ccontinents">On continents: </p>
+                <p id="cmaps">Maps link: </p>
+                <p id="carea">Landmass area: </p>
+                <p id="ctimezones">Timezone(s): </p>
+                <p id="ccapitalinfo">Capital placement: </p>
+    
+                <h5>International</h5>
+                <p id="cunmember">Un member: </p>
+                <p id="cborders">Bordering: </p>
+                <p id="cindependent">Independent: </p>
+    
+                <h5>Internet</h5>
+                <p id="ctld">Domain: </p>
+                <p id="ccca3">Shortcut: </p>
+                
+                <h5>National</h5>
+                <p id="ccarssigns">Cars signs: </p>
+                <p id="ccarsside">Cars side: </p>
+                <p id="ccurrencies">Currencies: </p>
+            </div>
+        </div>
         <?xml version="1.0"?>
         <!--
         *************Map created by Simplemaps.com********************		
@@ -54,6 +226,7 @@
         THE SOFTWARE.
 
         -->
+        
         <svg class="mainc" baseprofile="tiny" fill="#ececec"  stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width=".2" version="1.2" viewbox="0 0 2000 857"  id="all-countries" xmlns="http://www.w3.org/2000/svg">
         <path d="M1383 261.6l1.5 1.8-2.9 0.8-2.4 1.1-5.9 0.8-5.3 1.3-2.4 2.8 1.9 2.7 1.4 3.2-2 2.7 0.8 2.5-0.9 2.3-5.2-0.2 3.1 4.2-3.1 1.7-1.4 3.8 1.1 3.9-1.8 1.8-2.1-0.6-4 0.9-0.2 1.7-4.1 0-2.3 3.7 0.8 5.4-6.6 2.7-3.9-0.6-0.9 1.4-3.4-0.8-5.3 1-9.6-3.3 3.9-5.8-1.1-4.1-4.3-1.1-1.2-4.1-2.7-5.1 1.6-3.5-2.5-1 0.5-4.7 0.6-8 5.9 2.5 3.9-0.9 0.4-2.9 4-0.9 2.6-2-0.2-5.1 4.2-1.3 0.3-2.2 2.9 1.7 1.6 0.2 3 0 4.3 1.4 1.8 0.7 3.4-2 2.1 1.2 0.9-2.9 3.2 0.1 0.6-0.9-0.2-2.6 1.7-2.2 3.3 1.4-0.1 2 1.7 0.3 0.9 5.4 2.7 2.1 1.5-1.4 2.2-0.6 2.5-2.9 3.8 0.5 5.4 0z" id="AF" name="Afghanistan">
         </path>
@@ -229,7 +402,7 @@
         </path>
         <path d="M921.5 421.9l0.3 2.4 0.9 0 1.5-0.9 0.9 0.2 1.6 1.7 2.4 0.5 1.5-1.4 1.9-0.9 1.3-0.9 1.1 0.2 1.3 1.4 0.6 1.8 2.3 2.7-1.1 1.6-0.3 2.1 1.2-0.6 0.7 0.7-0.3 1.9 1.7 1.9-1.1 0.5-0.5 2.2 1.3 2.6 1.4 5.2-2.1 0.7-0.5 0.9 0.4 1.3-0.4 2.8-0.9 0-1.6-0.2-1.1 2.6-1.6 0-1.1-1.4 0.4-2.6-2.4-3.9-1.4 0.7-1.3 0.2-1.5 0.3 0.1-2.3-0.9-1.7 0.2-1.9-1.2-2.7-1.6-2.3-4.5 0-1.3 1.2-1.6 0.2-1 1.4-0.6 1.7-3.1 2.9-2.4-3.8-2.2-2.5-1.4-0.9-1.4-1.3-0.6-2.8-0.8-1.4-1.7-1.1 2.6-3.1 1.7 0.1 1.5-1 1.2-0.1 0.9-0.8-0.4-2.1 0.6-0.7 0.1-2.2 2.7 0.1 4.1 1.5 1.2-0.1 0.4-0.7 3.1 0.5 0.8-0.4z" id="GN" name="Guinea">
         </path>
-        <path d="M891.6 417.4l0.8-2.9 6.1-0.1 1.3-1.6 1.8-0.1 2.2 1.6 1.7 0 1.9-1 1.1 1.8-2.5 1.5-2.4-0.2-2.4-1.3-2.1 1.5-1 0-1.4 0.9-5.1-0.1z" id="GM" name="The Gambia">
+        <path d="M891.6 417.4l0.8-2.9 6.1-0.1 1.3-1.6 1.8-0.1 2.2 1.6 1.7 0 1.9-1 1.1 1.8-2.5 1.5-2.4-0.2-2.4-1.3-2.1 1.5-1 0-1.4 0.9-5.1-0.1z" id="GM" name="Gambia">
         </path>
         <path d="M909.2 421l-0.1 2.2-0.6 0.7 0.4 2.1-0.9 0.8-1.2 0.1-1.5 1-1.7-0.1-2.6 3.1-2.9-2.6-2.4-0.5-1.3-1.8 0.1-1-1.7-1.3-0.4-1.4 3-1 1.9 0.2 1.5-0.8 10.4 0.3z" id="GW" name="Guinea-Bissau">
         </path>
@@ -319,7 +492,7 @@
         </path>
         <path d="M1247.5 309.4l1.5 2.8-0.3 1.5 2.4 4.8-3.9 0.2-1.7-3.1-5-0.6 3.3-6.2 3.7 0.6z" id="KW" name="Kuwait">
         </path>
-        <path d="M1589.8 410.6l-5.3-2.3-2 4.4-5-2.5 1.5-2.9-0.4-5.4-5.3-5.6-1.3-6.4-5-5.2-4.3-0.4-0.8 2.2-3.2 0.2-1.9-1.1-5.3 3.8-1-5.8 0.4-6.7-3.8-0.3-0.9-3.9-2.7-2 0.8-2.3 4.1-4.2 0.8 1.5 3 0.2-2-7.4 2.7-0.9 4 5.1 3.5 5.8 6.8 0 3 5.6-3.3 1.7-1.2 2.3 7.3 3.9 5.7 7.6 4.4 5.6 4.9 4.5 2 4.5-0.2 6.4z" id="LA" name="Lao PDR">
+        <path d="M1589.8 410.6l-5.3-2.3-2 4.4-5-2.5 1.5-2.9-0.4-5.4-5.3-5.6-1.3-6.4-5-5.2-4.3-0.4-0.8 2.2-3.2 0.2-1.9-1.1-5.3 3.8-1-5.8 0.4-6.7-3.8-0.3-0.9-3.9-2.7-2 0.8-2.3 4.1-4.2 0.8 1.5 3 0.2-2-7.4 2.7-0.9 4 5.1 3.5 5.8 6.8 0 3 5.6-3.3 1.7-1.2 2.3 7.3 3.9 5.7 7.6 4.4 5.6 4.9 4.5 2 4.5-0.2 6.4z" id="LA" name="Laos">
         </path>
         <path d="M1179.1 288.2l-1.4 0.1-0.4 1.1-1.8 0 1.3-5.3 2.2-4.5 0-0.2 2.5 0.3 1.2 2.5-2.7 2.5-0.9 3.5z" id="LB" name="Lebanon">
         </path>
@@ -1003,22 +1176,232 @@
         </circle>
         </svg>
         <script>
-
+            //https://restcountries.com/v3.1/name/turkey?fullText=true
             const container= document.getElementById("all-countries").children;
             for (const element in document.getElementById("all-countries").children){          
                 document.getElementById("all-countries").children[element].addEventListener("click", function(){
                     var country_name=""
                     if (container[element].getAttribute("name")==null){
-                        console.log(container[element].getAttribute("class"))
+                        
                         country_name=container[element].getAttribute("class")
+                        country_clicked(country_name)
                     }
                     else{
-                        console.log(container[element].getAttribute("name"))
+                        
                         country_name=container[element].getAttribute("name")
                     }
+                    country_clicked(country_name);
                 })
             }
+
+    
+
+            function country_clicked(c){
+                
+                var api_url = `https://restcountries.com/v3.1/name/?fullText=true`;
+
+                var name=c
+                    switch (name) {
+                        case 'Swaziland':
+                            c="Estawini";
+                            break;
+                        case 'Reunion':
+                            c="Réunion";
+                            break;
+                        case 'Republic of Congo':
+                            c="Republic of the Congo";
+                            break;
+                        case 'The Gambia':
+                            c="Gambia";
+                            break;
+                        case 'The Gambia':
+                            c="Gambia";
+                            break;
+                        case 'Dem. Rep. Korea':
+                            c="North korea";
+                            break;
+                        case 'Canary Islands (Spain)':
+                            c="Spain";
+                            break;
+                        
+                    }
+                
+                var api_url = `https://restcountries.com/v3.1/name/${c}?fullText=true`;
+                
+                
+                
+                getapi_readmore(api_url);
+                async function getapi_readmore(url) {
+                    
+                    const response = await fetch(url)
+
+                    /**
+                     * Detect 4xx - 5xx errors,
+                     * response.ok will be false on failure.
+                     * */
+                    if (!response.ok) {
+
+                        throw new Error(response.status);
+                    
+                        return;
+                    }
+                    var data = await response.json();
+                    /**
+                     * Handle special cases where the data recieved
+                     * is empty, undefined and invalid
+                     */
+                    if (!data || !data.length) {
+
+                        throw new Error("Invalid data received.");
+                    }
+                    
+
+                    data=data[0]
+                
+                    document.getElementById("cname").innerHTML=`Country: ${data["name"]["common"]} <img src="${data["flags"]["png"]}">`
+                    
+
+                    var a = data["population"]
+                        if (a>1000 && a<1000000){
+                            var num = Number(a/1000)
+                            var to_add = "K"
+                        }
+                        else if(a>=1000000 && a<1000000000){
+                            var num = Number(a/1000000)
+                            var to_add = "M"
+                        }
+                        else if(a>=1000000000){
+                            var num = Number(a/1000000000)
+                            var to_add = "B"
+                        }
+                        else{
+                            var num = Number(a)
+                            var to_add = " "
+                        }
+                        
+                        var roundedString = num.toFixed(2);
+                        var rounded_pop = Number(roundedString) ;
+                        
+                    document.getElementById("cpopulation").innerHTML='<p1>Population:</p1> '+rounded_pop+ " " + to_add
+                    document.getElementById("cregion").innerHTML="<p1>Region:</p1> "+ data["region"]
+                    try {
+                        var capital=data['capital'] 
+                        document.getElementById("ccapital").innerHTML="<p1>Capital: </p1>" + capital
+                    }
+                    catch(err) {
+                        var capital="No capital"
+                        document.getElementById("ccapital").innerHTML=capital
+                    }
+                    try {
+                        var langs=""
+                        for (const lang in data['languages']){
+                            
+                            langs=langs+data['languages'][lang]+", "
+                        }  
+                        langs=langs.slice(0, -2);
+                        document.getElementById("clanguages").innerHTML="<p1>Official languages: </p1>" + langs
+                    }
+                    catch(err) {
+                        var langs="No official languages"
+                        document.getElementById("clanguages").innerHTML=langs
+                    }
+                    
+                    document.getElementById("ccontinents").innerHTML="<p1>Continent: </p1>"+data['continents'][0]
+                    document.getElementById("cmaps").innerHTML=`<a href="${data["maps"]["googleMaps"]}" target="_blank" rel="noopener noreferrer"><p1>Localization: </p1>On google maps >></a>`
+
+                    var timezones=""
+                    for (const timezone in data['timezones']){
+                        timezones=timezones+data['timezones'][timezone]+", "
+                    }  
+                    timezones=timezones.slice(0, -2);
+                    document.getElementById("ctimezones").innerHTML="<p1>Timezones: </p1>"+timezones
+                    document.getElementById("carea").innerHTML="<p1>Land area: </p1>"+data["area"] + " km^2"
+
+                    try{
+                        document.getElementById("ccapitalinfo").innerHTML="<p1>Capital coordinates: </p1>"+data['capitalInfo']["latlng"]
+                    }
+                    catch(err){
+                        document.getElementById("ccapitalinfo").innerHTML="No capital"
+                    }
+                    var unmem=data['unMember']
+                    if (unmem===false){
+                        document.getElementById("cunmember").innerHTML="<p1>UN member: </p1> Not a member of UN"
+                    }
+                    else{
+                        document.getElementById("cunmember").innerHTML="<p1>UN member: </p1> A member of UN"
+                    }
+
+                    try{
+                        var i=0
+                        var borders=""
+                        for (const bordering in data['borders']){
+                            borders=borders+data['borders'][bordering]+", "
+                            i=i+1
+                        } 
+                        borders=borders.slice(0, -2);
+                        document.getElementById("cborders").innerHTML=`<p1>Bordering(${i}): </p1>`+borders+ ""
+                    }
+                    catch(err){
+                        document.getElementById("cborders").innerHTML="<p1>Bordering: </p1> none"
+                    }
+
+                    var independent=data['independent']
+                    try{
+                        if (independent===false){
+                            document.getElementById("cindependent").innerHTML="<p1>Independent: </p1> No"
+                        }
+                        else{
+                            document.getElementById("cindependent").innerHTML="<p1>Independent: </p1> Yes"
+                        }
+                    }
+                    catch(err){
+                        document.getElementById("cindependent").innerHTML="<p1>Independent: </p1> It's complicated"
+                    }
+
+                    try{
+                        document.getElementById("ctld").innerHTML="<p1>Internet domain: </p1>"+data['tld'][0]
+                    }
+                    catch(err){
+                        document.getElementById("ctld").innerHTML="<p1>Internet domain: Not specified</p1>"
+                    }
+
+                    try{
+                        document.getElementById("ccca3").innerHTML="<p1>Country name shortcut: </p1>"+data['cca3']
+                    }
+                    catch(err){
+                        document.getElementById("ccca3").innerHTML="<p1>Shortcut: Not specified</p1>"
+                    }
+
+                    document.getElementById("ccarssigns").innerHTML="<p1>Cars signs: </p1>"+data["car"]['signs'][0]
+                    document.getElementById("ccarsside").innerHTML="<p1>Cars side: </p1>"+data["car"]['side']
+                    
+                    
+                    try{
+                        var currencies=""
+                        for (const currency in data['currencies']){
+                            currencies=currencies+`| ${data['currencies'][currency]["name"]}, ${data['currencies'][currency]["symbol"]}`+" | "
+                        } 
+                        
+                        document.getElementById("ccurrencies").innerHTML="<p1>Currencies: </p1>"+currencies
+                    }
+                    catch(err){
+                        document.getElementById("ccurrencies").innerHTML="<p1>Currencies: </p1> no currency"
+                    }
+                    document.getElementById('c-all').style="visibility:visible;"
+                var api_url = ``;
+                }
+                
+            }
             
+                //https://restcountries.com/v3.1/name/Democratic%20Republic%20of%20the%20Congo?fullText=true
+    function close_win_show(){
+        document.getElementById('c-all').style="visibility:hidden;"
+        
+    }
+    
+
+            
+    
         </script>
     </body>
     

@@ -448,7 +448,7 @@
                         </div>
                     </div>
                 </div>
-            <a href="#" class="map-c">Map</a>
+            <a href="/map" target="_blank" class="map-c">Map</a>
             <a href="#" class="map-c">Statistics</a>
             </div>
         </nav>   
@@ -479,6 +479,7 @@
     function close_win_show(){
         document.getElementById('c-all').style="visibility:hidden;"
     }
+    
     function region_clicked(region_passed){
         document.getElementById('c-all').style="visibility:hidden;"
         if (region_passed!=""){
@@ -513,7 +514,6 @@
     async function getapi_readmore(url, key) {
         const response = await fetch(url);
         var data = await response.json();
-        
         
         document.getElementById("cname").innerHTML=`Country: ${data[key]["name"]["common"]} <img src="${data[key]["flags"]["png"]}">`
         var a = data[key]["population"]
@@ -694,7 +694,7 @@
             
             var roundedString = num.toFixed(2);
             var rounded_pop = Number(roundedString) ;
-
+            console.log(data[key])
 
             
 

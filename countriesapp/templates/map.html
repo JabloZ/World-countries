@@ -11,9 +11,38 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'media/Bez nazwy2.png' %}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
+        #name{
+            position: absolute;
+            background-color: rgba(198, 83, 233, 0.7);
+            width: fit-content;
+            opacity: 0;
+            border-radius: 5px;
+            color:white;
+            padding: 5px;
+            font-size: 1.5rem;
+            cursor:pointer;
+            text-align: center;
+        }
+             ::-webkit-scrollbar {
+        width: 20px;
+        }
+
+        ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+        }
+
+        ::-webkit-scrollbar-thumb {
+        background: #888; 
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+        }
+        
             *{
                 margin: 0;
                 padding: 0;
+                box-sizing: border-box;
             }
             body{
                 background-color: rgb(48, 48, 48);
@@ -21,13 +50,14 @@
                 overflow-y: hidden;
             }
             svg path:hover{
-                fill:aquamarine;
-                stroke-width: 1px;
-                transition: fill 0.4s;
+                fill:rgb(131, 91, 163);
+                stroke-width: 1.6px;
+                transition: fill 0.8s;
             }
             svg path{
                 cursor: pointer;
             }
+            
             .c-all{
             
             visibility: hidden;
@@ -157,6 +187,9 @@
         </style>
     </head>
     <body>
+        <div id="name">
+            <p id="namep">Name</p>
+        </div>
         <div class="c-all" id="c-all">
                
             <div class="c-item-c">
@@ -227,7 +260,7 @@
 
         -->
         
-        <svg class="mainc" baseprofile="tiny" fill="#ececec"  stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width=".2" version="1.2" viewbox="0 0 2000 857"  id="all-countries" xmlns="http://www.w3.org/2000/svg">
+        <svg class="mainc" baseprofile="tiny" fill="#ececec"  stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width=".4" version="1.2" viewbox="0 0 2000 857"  id="all-countries" xmlns="http://www.w3.org/2000/svg">
         <path d="M1383 261.6l1.5 1.8-2.9 0.8-2.4 1.1-5.9 0.8-5.3 1.3-2.4 2.8 1.9 2.7 1.4 3.2-2 2.7 0.8 2.5-0.9 2.3-5.2-0.2 3.1 4.2-3.1 1.7-1.4 3.8 1.1 3.9-1.8 1.8-2.1-0.6-4 0.9-0.2 1.7-4.1 0-2.3 3.7 0.8 5.4-6.6 2.7-3.9-0.6-0.9 1.4-3.4-0.8-5.3 1-9.6-3.3 3.9-5.8-1.1-4.1-4.3-1.1-1.2-4.1-2.7-5.1 1.6-3.5-2.5-1 0.5-4.7 0.6-8 5.9 2.5 3.9-0.9 0.4-2.9 4-0.9 2.6-2-0.2-5.1 4.2-1.3 0.3-2.2 2.9 1.7 1.6 0.2 3 0 4.3 1.4 1.8 0.7 3.4-2 2.1 1.2 0.9-2.9 3.2 0.1 0.6-0.9-0.2-2.6 1.7-2.2 3.3 1.4-0.1 2 1.7 0.3 0.9 5.4 2.7 2.1 1.5-1.4 2.2-0.6 2.5-2.9 3.8 0.5 5.4 0z" id="AF" name="Afghanistan">
         </path>
         <path class="Angola" d="M 1121.2 572 1121.8 574 1121.1 577.1 1122 580.1 1121.1 582.5 1121.5 584.7 1109.8 584.6 1109 605.1 1112.6 610.3 1116.2 614.3 1105.8 616.9 1092.3 616 1088.5 613 1065.8 613.2 1065 613.7 1061.7 610.8 1058.1 610.6 1054.7 611.7 1052 612.9 1051.5 608.9 1052.4 603.2 1054.4 597.3 1054.7 594.6 1056.6 588.8 1058 586.2 1061.3 582 1063.2 579.1 1063.8 574.4 1063.5 570.7 1061.9 568.4 1060.4 564.5 1059.1 560.7 1059.4 559.3 1061.1 556.8 1059.5 550.6 1058.3 546.3 1055.5 542.2 1056.1 541 1058.4 540.1 1060.1 540.2 1062.1 539.5 1078.8 539.6 1080.1 544.3 1081.7 548.2 1083 550.3 1085.1 553.6 1088.9 553.1 1090.7 552.2 1093.8 553.1 1094.7 551.5 1096.2 547.8 1099.7 547.5 1100 546.4 1102.9 546.4 1102.4 548.7 1109.2 548.6 1109.3 552.7 1110.4 555.1 1109.5 559 1109.9 563 1111.7 565.4 1111.3 573 1112.7 572.4 1115.1 572.6 1118.6 571.6 1121.2 572 Z">
@@ -1178,13 +1211,14 @@
         <script>
             //https://restcountries.com/v3.1/name/turkey?fullText=true
             const container= document.getElementById("all-countries").children;
-            for (const element in document.getElementById("all-countries").children){          
+            for (const element in document.getElementById("all-countries").children){  
+
                 document.getElementById("all-countries").children[element].addEventListener("click", function(){
                     var country_name=""
                     if (container[element].getAttribute("name")==null){
                         
                         country_name=container[element].getAttribute("class")
-                        country_clicked(country_name)
+
                     }
                     else{
                         
@@ -1192,9 +1226,40 @@
                     }
                     country_clicked(country_name);
                 })
-            }
 
-    
+                document.getElementById("all-countries").children[element].addEventListener("mouseover", function(){
+                    var country_name_new=""
+                    document.getElementById("name").style.opacity=0
+                    window.onmousemove=function(j){
+                        x=j.clientX
+                        y=j.clientY
+                        
+                        document.getElementById("name").style.top=y-100+"px"
+                        document.getElementById("name").style.left=x-50+"px"
+                        
+                    }  
+
+
+
+                    
+                    if (container[element].getAttribute("name")==null){
+                            country_name_new=container[element].getAttribute("class")             
+                    }
+                    else{
+                            country_name_new=container[element].getAttribute("name")   
+                        }
+
+                    document.getElementById("name").innerText=country_name_new 
+                    document.getElementById("name").style.opacity=1 
+                    }
+                    
+                    )
+                
+                document.getElementById("all-countries").children[element].addEventListener("mouseleave", function(){
+                    document.getElementById("name").style.opacity=0  
+                })
+                }
+
 
             function country_clicked(c){
                 
@@ -1405,4 +1470,4 @@
         </script>
     </body>
     
-</html>
+    </html>

@@ -1320,9 +1320,9 @@
                         throw new Error("Invalid data received.");
                     }
                     
-
+                    
                     data=data[0]
-                
+                    console.log(data);
                     document.getElementById("cname").innerHTML=`Country: ${data["name"]["common"]} <img src="${data["flags"]["png"]}">`
                     
 

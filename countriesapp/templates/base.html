@@ -501,22 +501,27 @@
         getapi(api_url);
         
     }
-    const api_url = "https://restcountries.com/v3.1/all";
+    const api_url = "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital";
 
 
     function readmore_c(c_key){
         //currencies (symbol and name), cars (side and signs), independent, maps, unMember, for languages, capitalInfo, tld[0](domena), cca3(skrot 3 litery), for timezones,  area, continents
         document.getElementById('c-all').style="visibility:visible;"
+        console.log(c_key)
         getapi_readmore(api_url, c_key);
 
     }
 
     async function getapi_readmore(url, key) {
-        const response = await fetch(url);
+        console.log()
+        var api_url2 = `https://restcountries.com/v3.1/name/${key}?fullText=true`;
+
+        const response = await fetch(api_url2);
         var data = await response.json();
+        data=data[0]
         
-        document.getElementById("cname").innerHTML=`Country: ${data[key]["name"]["common"]} <img src="${data[key]["flags"]["png"]}">`
-        var a = data[key]["population"]
+        document.getElementById("cname").innerHTML=`Country: ${data["name"]["common"]} <img src="${data["flags"]["png"]}">`
+        var a = data["population"]
             if (a>1000 && a<1000000){
                 var num = Number(a/1000)
                 var to_add = "K"
@@ -538,9 +543,9 @@
             var rounded_pop = Number(roundedString) ;
             
         document.getElementById("cpopulation").innerHTML='<p1>Population:</p1> '+rounded_pop+ " " + to_add
-        document.getElementById("cregion").innerHTML="<p1>Region:</p1> "+ data[key]["region"]
+        document.getElementById("cregion").innerHTML="<p1>Region:</p1> "+ data["region"]
         try {
-            var capital=data[key]['capital']  
+            var capital=data['capital']  
             document.getElementById("ccapital").innerHTML="<p1>Capital: </p1>" + capital
         }
         catch(err) {
@@ -549,9 +554,9 @@
         }
         try {
             var langs=""
-            for (const lang in data[key]['languages']){
+            for (const lang in data['languages']){
                 
-                langs=langs+data[key]['languages'][lang]+", "
+                langs=langs+data['languages'][lang]+", "
             }  
             langs=langs.slice(0, -2);
             document.getElementById("clanguages").innerHTML="<p1>Official languages: </p1>" + langs
@@ -561,24 +566,24 @@
             document.getElementById("clanguages").innerHTML=langs
         }
         
-        document.getElementById("ccontinents").innerHTML="<p1>Continent: </p1>"+data[key]['continents'][0]
-        document.getElementById("cmaps").innerHTML=`<a href="${data[key]["maps"]["googleMaps"]}" target="_blank" rel="noopener noreferrer"><p1>Localization: </p1>On google maps >></a>`
+        document.getElementById("ccontinents").innerHTML="<p1>Continent: </p1>"+data['continents'][0]
+        document.getElementById("cmaps").innerHTML=`<a href="${data["maps"]["googleMaps"]}" target="_blank" rel="noopener noreferrer"><p1>Localization: </p1>On google maps >></a>`
 
         var timezones=""
-        for (const timezone in data[key]['timezones']){
-            timezones=timezones+data[key]['timezones'][timezone]+", "
+        for (const timezone in data['timezones']){
+            timezones=timezones+data['timezones'][timezone]+", "
         }  
         timezones=timezones.slice(0, -2);
         document.getElementById("ctimezones").innerHTML="<p1>Timezones: </p1>"+timezones
-        document.getElementById("carea").innerHTML="<p1>Land area: </p1>"+data[key]["area"] + " km^2"
+        document.getElementById("carea").innerHTML="<p1>Land area: </p1>"+data["area"] + " km^2"
 
         try{
-            document.getElementById("ccapitalinfo").innerHTML="<p1>Capital coordinates: </p1>"+data[key]['capitalInfo']["latlng"]
+            document.getElementById("ccapitalinfo").innerHTML="<p1>Capital coordinates: </p1>"+data['capitalInfo']["latlng"]
         }
         catch(err){
             document.getElementById("ccapitalinfo").innerHTML="No capital"
         }
-        var unmem=data[key]['unMember']
+        var unmem=data['unMember']
         if (unmem===false){
             document.getElementById("cunmember").innerHTML="<p1>UN member: </p1> Not a member of UN"
         }
@@ -589,8 +594,8 @@
         try{
             var i=0
             var borders=""
-            for (const bordering in data[key]['borders']){
-                borders=borders+data[key]['borders'][bordering]+", "
+            for (const bordering in data['borders']){
+                borders=borders+data['borders'][bordering]+", "
                 i=i+1
             } 
             borders=borders.slice(0, -2);
@@ -600,7 +605,7 @@
             document.getElementById("cborders").innerHTML="<p1>Bordering: </p1> none"
         }
 
-        var independent=data[key]['independent']
+        var independent=data['independent']
         try{
             if (independent===false){
                 document.getElementById("cindependent").innerHTML="<p1>Independent: </p1> No"
@@ -614,27 +619,27 @@
         }
 
         try{
-            document.getElementById("ctld").innerHTML="<p1>Internet domain: </p1>"+data[key]['tld'][0]
+            document.getElementById("ctld").innerHTML="<p1>Internet domain: </p1>"+data['tld'][0]
         }
         catch(err){
             document.getElementById("ctld").innerHTML="<p1>Internet domain: Not specified</p1>"
         }
 
         try{
-            document.getElementById("ccca3").innerHTML="<p1>Country name shortcut: </p1>"+data[key]['cca3']
+            document.getElementById("ccca3").innerHTML="<p1>Country name shortcut: </p1>"+data['cca3']
         }
         catch(err){
             document.getElementById("ccca3").innerHTML="<p1>Shortcut: Not specified</p1>"
         }
 
-        document.getElementById("ccarssigns").innerHTML="<p1>Cars signs: </p1>"+data[key]["car"]['signs'][0]
-        document.getElementById("ccarsside").innerHTML="<p1>Cars side: </p1>"+data[key]["car"]['side']
+        document.getElementById("ccarssigns").innerHTML="<p1>Cars signs: </p1>"+data["car"]['signs'][0]
+        document.getElementById("ccarsside").innerHTML="<p1>Cars side: </p1>"+data["car"]['side']
         
         
         try{
             var currencies=""
-            for (const currency in data[key]['currencies']){
-                currencies=currencies+`| ${data[key]['currencies'][currency]["name"]}, ${data[key]['currencies'][currency]["symbol"]}`+" | "
+            for (const currency in data['currencies']){
+                currencies=currencies+`| ${data['currencies'][currency]["name"]}, ${data['currencies'][currency]["symbol"]}`+" | "
             } 
             
             document.getElementById("ccurrencies").innerHTML="<p1>Currencies: </p1>"+currencies
@@ -649,6 +654,8 @@
 
     async function getapi(url, ) {
         document.getElementById("reg-drop").style="visibility:hidden;"
+
+
         const response = await fetch(url);
 
         var data = await response.json();
@@ -693,36 +700,24 @@
             }
             
             var roundedString = num.toFixed(2);
-            var rounded_pop = Number(roundedString) ;
-            console.log(data[key])
-
-            
-
+            var rounded_pop = Number(roundedString);
             document.getElementById("all-countries").innerHTML += 
             `<div class="grid-item">
                 <div class="flag-con" style="min-height: 50%; background-color: white;"><img src="${data[key]["flags"]["png"]}"></div>
-                <div class="short-desc" style="min-height: 50%;" id="${key}"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a onclick="readmore_c(${key})" href="javascript:void(0)">Read more </a></p> </div>
+                <div class="short-desc" style="min-height: 50%;" id="${key}"><p>${"Name: "+ data[key]["name"]["common"]}</p><p>Capital: ${capital}</p><p>${"Population: "+ rounded_pop+to_add}</p><p>${"Region: " + data[key]["region"]}</p><p style="padding-top: 20px;"><a onclick="readmore_c('${data[key]["name"]["common"]}')" href="javascript:void(0)">Read more </a></p> </div>
             </div>";`
 
             
         }
-
-
-        //['name', 'tld', 'cca2', 'ccn3', 'cca3', 'cioc', 'independent', 'status', 'unMember', 'currencies', 'idd', 'capital', 'altSpellings', 'region', 'subregion', 'languages', 
-        //'translations', 'latlng', 'landlocked', 'borders', 'area', 'demonyms', 'flag', 'maps', 'population', 'fifa', 'car', 'timezones', 'continents', 'flags', 'coatOfArms', 'startOfWeek', 'capitalInfo', 'postalCode']    
         var element = document.getElementById("all-countries");
         var numberOfChildren = element.children.length;
-        console.log(numberOfChildren)
         document.getElementById("how-many").innerHTML="Number of results: "+numberOfChildren 
 
         searched=document.getElementById('country-id').value="" 
         searched=""  
         document.getElementById("reg-drop").style="visibility:visible;"
         }
-        
 
-        // Calling that async function
-        console.log('wor')
         getapi(api_url);
   </script>
 </body>

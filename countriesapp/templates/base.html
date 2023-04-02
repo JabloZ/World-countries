@@ -433,7 +433,7 @@
     </div>
         <nav>
             <div class="nav-container">
-            <a href="#" class="world-c" onclick="search_clicked()">World countries</a>
+            <a href="#" class="world-c" onclick="world_con_clicked()">World countries</a>
                 <div class="container">
                     <div class="row">    
                         <div class="col-xs-8 col-xs-offset-2">
@@ -476,29 +476,42 @@
     <script>
         var region_searched=""
         var searched=""
+    function world_con_clicked(){
+        let region_passed="";
+        region_clicked(region_passed);
+    }
     function close_win_show(){
         document.getElementById('c-all').style="visibility:hidden;"
     }
     
     function region_clicked(region_passed){
+        region_searched=region_passed
         document.getElementById('c-all').style="visibility:hidden;"
         if (region_passed!=""){
+            
             document.getElementById("reg-drop").innerHTML=region_passed
+            var api_u=`https://restcountries.com/v3.1/region/${region_searched}?fields=name,flags,population,region,capital`
         }
         else if (region_passed==""){
+           
             document.getElementById("reg-drop").innerHTML="Sort by region"
+            var api_u=`https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital`;
         }
-        region_searched=region_passed
+        
         document.getElementById("all-countries").innerHTML=""
         document.getElementById("how-many").innerHTML=""
-        getapi(api_url);
+        
+        getapi(api_u);
     }
     function search_clicked(){
         document.getElementById('c-all').style="visibility:hidden;"
         searched=document.getElementById('country-id').value
+        
         document.getElementById("all-countries").innerHTML=""
         document.getElementById("how-many").innerHTML=""
-        getapi(api_url);
+        var api_url2 = `https://restcountries.com/v3.1/name/${searched}?fields=name,flags,population,region,capital`;
+
+        getapi(api_url2);
         
     }
     const api_url = "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital";
@@ -507,13 +520,13 @@
     function readmore_c(c_key){
         //currencies (symbol and name), cars (side and signs), independent, maps, unMember, for languages, capitalInfo, tld[0](domena), cca3(skrot 3 litery), for timezones,  area, continents
         document.getElementById('c-all').style="visibility:visible;"
-        console.log(c_key)
+       
         getapi_readmore(api_url, c_key);
 
     }
 
     async function getapi_readmore(url, key) {
-        console.log()
+        
         var api_url2 = `https://restcountries.com/v3.1/name/${key}?fullText=true`;
 
         const response = await fetch(api_url2);
@@ -650,7 +663,7 @@
 
     }
 
-
+ 
 
     async function getapi(url, ) {
         document.getElementById("reg-drop").style="visibility:hidden;"
@@ -658,22 +671,40 @@
 
         const response = await fetch(url);
 
-        var data = await response.json();
+        if (!response.ok) {
 
+            
+            var element = document.getElementById("all-countries");
+            var numberOfChildren = element.children.length;
+            document.getElementById("how-many").innerHTML="Number of results: "+numberOfChildren 
+
+            searched=document.getElementById('country-id').value="" 
+            searched=""  
+            document.getElementById("reg-drop").style="visibility:visible;"
+            
+            throw new Error(response.status);
+            return;
+        }
+        var data = await response.json();
+        /**
+        * Handle special cases where the data recieved
+        * is empty, undefined and invalid
+        */
+        if (!data || !data.length) {
+
+        throw new Error("Invalid data received.");
+
+        }
+
+        try{
+            data["name"]
+        }
+        catch(err){
+            return 0;
+        }
         for (var key in data)
             
             {
-                
-            if (searched!=""){
-                if ((data[key]["name"]["common"].toLowerCase()).includes(searched)===false){
-                    continue;
-                }
-            }
-            if (region_searched!=""){
-                if (data[key]["region"]!=region_searched){
-                    continue;
-                }
-            }
             try {
                 var capital=data[key]['capital']  
             }
@@ -708,7 +739,7 @@
             </div>";`
 
             
-        }
+            }
         var element = document.getElementById("all-countries");
         var numberOfChildren = element.children.length;
         document.getElementById("how-many").innerHTML="Number of results: "+numberOfChildren 
